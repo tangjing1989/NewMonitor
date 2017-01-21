@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.web.dao.UserMapper">
+    <!-- redis缓存 -->
+    <!--<cache eviction="LRU" type="com.cn.web.redis2.RedisCache"/>-->
+
+    <resultMap id="UserMaper" type="com.cn.web.pojo.UserPojo">
+        <id column="USERID" property="userId" javaType="int" jdbcType="INTEGER"></id>
+        <result column="USERNAME" property="userName" javaType="string" jdbcType="VARCHAR"></result>
+        <result column="USERCODE" property="userCode" javaType="string" jdbcType="VARCHAR"></result>
+        <result column="PASSWORD" property="password" javaType="string" jdbcType="VARCHAR"></result>
+        <result column="CRTDATE"  property="crtDate" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"></result>
+        <result column="UPTDATE"  property="uptDate"  javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"></result>
+    </resultMap>
+
+    <select id="count" resultType="int">
+      SELECT COUNT (-1) from USER
+    </select>
+
+    <select id="queryUserByUserName" resultMap="UserMaper">
+
+        SELECT  * FROM  USER WHERE  USERCODE=#{userName} And PASSWORD=#{password}
+    </select>
+
+    <select id="queryUserList" resultMap="UserMaper">
+        SELECT  * FROM  USER
+    </select>
+
+    <select id="queryUserListCount" resultType="int">
+        SELECT  count(-1) FROM  USER
+    </select>
+</mapper>
