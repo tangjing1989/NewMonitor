@@ -2,13 +2,17 @@ package com.cn.web.service;
 
 import com.cn.web.dao.UserMapper;
 import com.cn.web.pojo.UserPojo;
-import com.cn.web.util.page.IPageList;
+import com.cn.web.util.page.IPageImpl;
+import com.cn.web.util.page.PageBaseUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Describe:
@@ -17,28 +21,31 @@ import java.util.List;
  * Time:下午4:43
  */
 @Service
-public class UserImpl implements IUserImpl {
+public class UserImpl implements IUserImpl{
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    PageBaseUtil pageBaseUtil;
 
     public UserPojo getUser(String userName, String password) throws SQLException {
 
         return userMapper.queryUserByUserName(userName, password);
     }
 
-
-    public List<UserPojo> queryUserList() throws  SQLException
-    {
-        return  userMapper.queryUserList();
+    public String queryUserListPage(String aoData) throws SQLException {
+        pageBaseUtil.setPageObject(aoData);
+        pageBaseUtil.setSumNum(queryUserListCount());
+        Map<String,Object> map=pageBaseUtil.getParam();
+        List<UserPojo>   list   = userMapper.queryUserListPage(map);
+        return pageBaseUtil.getPageObject(list);
     }
 
-    public int queryUserListCount() throws SQLException
-    {
+
+    public int queryUserListCount() throws SQLException {
         return userMapper.queryUserListCount();
     }
-
-
 
 
 }

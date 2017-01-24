@@ -13,12 +13,27 @@
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
     <context:component-scan base-package="com.cn.web"/>
     <!--开启注解-->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+    <!--解决json返回中文乱码-->
+    <mvc:message-converters>
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+            <property name="supportedMediaTypes">
+                <list>
+                    <value>application/json;charset=UTF-8</value>
+                </list>
+            </property>
+        </bean>
+    </mvc:message-converters>
+    </mvc:annotation-driven>
     <!-- 静态资源(js、image等)的访问 -->
     <mvc:default-servlet-handler/>
 
     <mvc:resources location="/assets/" mapping="/assets/**"/>
 
+    <!--分页方法-->
+    <bean class="com.cn.web.util.page.PageBaseUtil"/>
+    <!--通过Spring应用上下文获取实例-->
+    <bean class="com.cn.web.util.SpringContextHolder"/>
 
     <mvc:interceptors>
         <mvc:interceptor>

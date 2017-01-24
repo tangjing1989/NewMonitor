@@ -15,6 +15,7 @@ public class MenuListPojo {
     private String         menuName;
     private String         menuHref;
     private String         parentCode;
+    private String         imgText;
     private List<MenuPojo> nodes;
 
     public List<MenuPojo> getNodes() {
@@ -63,5 +64,13 @@ public class MenuListPojo {
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
+    }
+
+    public String getImgText() {
+        return imgText;
+    }
+
+    public void setImgText(String imgText) {
+        this.imgText = imgText;
     }
 }

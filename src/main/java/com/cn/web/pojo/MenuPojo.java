@@ -16,6 +16,7 @@ public class MenuPojo {
     private String menuName;
     private String menuHref;
     private String parentCode;
+    private String imgText;
 
     public int getMenuId() {
         return menuId;
@@ -55,5 +56,13 @@ public class MenuPojo {
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
+    }
+
+    public String getImgText() {
+        return imgText;
+    }
+
+    public void setImgText(String imgText) {
+        this.imgText = imgText;
     }
 }

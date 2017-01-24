@@ -1,14 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet" type="text/css" href="/Monitor/assets/static/h-ui/css/H-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="/Monitor/assets/static/h-ui.admin/css/H-ui.admin.css" />
-    <link rel="stylesheet" type="text/css" href="/Monitor/assets/lib/Hui-iconfont/1.0.7/iconfont.css" />
-    <link rel="stylesheet" type="text/css" href="/Monitor/assets/lib/icheck/icheck.css" />
-    <link rel="stylesheet" type="text/css" href="/Monitor/assets/static/h-ui.admin/skin/default/skin.css" id="skin" />
-    <link rel="stylesheet" type="text/css" href="/Monitor/assets/static/h-ui.admin/css/style.css" />
+    <link th:include="include/taglib :: globaljs"/>
+    <link th:include="include/taglib :: commonjs"/>
     <title>用户管理</title>
 </head>
+<style type="text/css">
+    .comm_check {
+        margin: 2px 2px 0 30px;
+        float: left;
+        vertical-align: middle;
+        margin-top: 3px !important;
+        margin-top: 0px;
+    }
+</style>
 <body>
 
 <div class="page-container">
@@ -18,8 +23,8 @@
         -
         <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax"
                class="input-text Wdate" style="width:120px;">
-        <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name="">
-        <button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户
+        <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="queryParam" name="">
+        <button onclick="init()" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户
         </button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"><a href="javascript:;" onclick="datadel()"
@@ -40,62 +45,31 @@
             </tr>
             </thead>
             <tbody>
-            <!--<tr class="text-c" th:each="user : ${users}">-->
-                <!--<td><input type="checkbox" value="1" name=""></td>-->
-                <!--<td th:text="${user.userId}"></td>-->
-                <!--<td th:text="${user.userCode}"></td>-->
-                <!--<td th:text="${user.userName}"></td>-->
-                <!--<td th:text="${user.crtDate}"></td>-->
-                <!--<td th:text="${user.uptDate}"></td>-->
-            <!--</tr>-->
             </tbody>
         </table>
     </div>
 </div>
 
-<script type="text/javascript" src="/Monitor/assets/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/Monitor/assets/lib/layer/2.1/layer.js"></script>
-<script type="text/javascript" src="/Monitor/assets/lib/laypage/1.2/laypage.js"></script>
-<script type="text/javascript" src="/Monitor/assets/lib/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="/Monitor/assets/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/Monitor/assets/static/h-ui/js/H-ui.js"></script>
-<script type="text/javascript" src="/Monitor/assets/static/h-ui.admin/js/H-ui.admin.js"></script>
 <script type="text/javascript">
 
 
-    $(document).ready(function() {
-        $(".table-sort").dataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": "list.json"
-    });
-
-        $('.table-sort tbody').on( 'click', 'tr', function () {
-            if ( $(this).hasClass('selected') ) {
-                $(this).removeClass('selected');
-            }
-            else {
-                table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-            }
-        });
+    $(document).ready(function () {
+        init();
     })
-    // 3个参数的名字可以随便命名,但必须是3个参数,少一个都不行
-    function retrieveData( sSource111,aoData111, fnCallback111) {
-        $.ajax({
-            url : sSource111,//这个就是请求地址对应sAjaxSource
-            data : {"aoData":JSON.stringify(aoData111)},//这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数
-            type : 'post',
-            dataType : 'json',
-            async : false,
-            success : function(result) {
-                fnCallback111(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
-            },
-            error : function(msg) {
-            }
-        });
-    }
 
+    function init() {
+        var map=new Map();
+        var url="tableDemoAjax.json";
+        var aoColumns=new Array();
+        var tableClass=".table-sort";
+        aoColumns.push({'mData': 'rowNum', 'sClass': 'center'});
+        aoColumns.push({'mData': 'userId', 'sClass': 'center'});
+        aoColumns.push({'mData': 'userName', 'sClass': 'center'});
+        aoColumns.push({'mData': 'userCode', 'sClass': 'center'});
+        aoColumns.push({'mData': 'crtDate', 'sClass': 'center'});
+        aoColumns.push({'mData': 'uptDate', 'sClass': 'center'});
+        query(tableClass,url,aoColumns,map);
+    }
 </script>
 </body>
 </html>

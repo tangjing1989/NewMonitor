@@ -9,9 +9,10 @@ import java.util.List;
  */
 public interface IUserImpl {
 
-    UserPojo getUser(String userName,String password) throws Exception;
 
-    List<UserPojo> queryUserList() throws  Exception;
+    UserPojo getUser(String userName, String password) throws Exception;
+
+    String queryUserListPage( String aoData) throws Exception;
 
     int queryUserListCount() throws Exception;
 }

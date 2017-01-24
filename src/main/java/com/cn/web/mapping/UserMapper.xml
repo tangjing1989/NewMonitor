@@ -9,8 +9,9 @@
         <result column="USERNAME" property="userName" javaType="string" jdbcType="VARCHAR"></result>
         <result column="USERCODE" property="userCode" javaType="string" jdbcType="VARCHAR"></result>
         <result column="PASSWORD" property="password" javaType="string" jdbcType="VARCHAR"></result>
-        <result column="CRTDATE"  property="crtDate" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"></result>
-        <result column="UPTDATE"  property="uptDate"  javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"></result>
+        <result column="CRTDATE"  property="crtDate" javaType="string"  jdbcType="VARCHAR"></result>
+        <result column="UPTDATE"  property="uptDate"  javaType="String" jdbcType="VARCHAR"></result>
+        <result column="ROWNUM"   property="rowNum" javaType="String" jdbcType="VARCHAR"></result>
     </resultMap>
 
     <select id="count" resultType="int">
@@ -23,10 +24,26 @@
     </select>
 
     <select id="queryUserList" resultMap="UserMaper">
-        SELECT  * FROM  USER
+        SELECT @rowno:=@rowno+1 as rowno,r.* from user r,(select @rowno:=0) t
     </select>
 
     <select id="queryUserListCount" resultType="int">
         SELECT  count(-1) FROM  USER
     </select>
+
+    <select id="queryUserListPage" resultMap="UserMaper">
+        select * from (
+        SELECT
+            @rowno :=@rowno + 1 AS rowno ,
+            r.*
+        FROM
+            USER r ,
+            (SELECT @rowno := 0) t
+        order by r.userId asc
+        ) temp
+
+        Limit #{map.start},#{map.end}
+    </select>
+
+
 </mapper>

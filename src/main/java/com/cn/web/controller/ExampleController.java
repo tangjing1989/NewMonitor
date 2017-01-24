@@ -25,4 +25,9 @@ public class ExampleController {
         return url + "table";
     }
 
+    @RequestMapping("icon.htm")
+    public String toIcon() {
+        return url + "icon";
+    }
+
 }

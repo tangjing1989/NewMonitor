@@ -1,7 +1,7 @@
 package com.cn.web.pojo;
 
 
-import java.sql.Timestamp;
+import com.cn.web.util.page.PageBaseUtil;
 
 /**
  * Describe:
@@ -10,14 +10,14 @@ import java.sql.Timestamp;
  * Time:下午4:19
  */
 
-public class UserPojo {
+public class UserPojo  extends PageBaseUtil{
 
     private int    userId;
     private String userName;
     private String userCode;
     private String password;
-    private Timestamp crtDate;
-    private Timestamp uptDate;
+    private String crtDate;
+    private String uptDate;
 
     public int getUserId() {
         return userId;
@@ -51,20 +51,19 @@ public class UserPojo {
         this.password = password;
     }
 
-
-    public Timestamp getCrtDate() {
+    public String getCrtDate() {
         return crtDate;
     }
 
-    public void setCrtDate(Timestamp crtDate) {
+    public void setCrtDate(String crtDate) {
         this.crtDate = crtDate;
     }
 
-    public Timestamp getUptDate() {
+    public String getUptDate() {
         return uptDate;
     }
 
-    public void setUptDate(Timestamp uptDate) {
+    public void setUptDate(String uptDate) {
         this.uptDate = uptDate;
     }
 }

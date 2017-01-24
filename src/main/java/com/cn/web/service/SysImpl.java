@@ -39,6 +39,7 @@ public class SysImpl implements ISysImpl {
             menuListPojo.setMenuName(pojo.getMenuName());
             menuListPojo.setMenuHref(pojo.getMenuHref());
             menuListPojo.setParentCode(pojo.getParentCode());
+            menuListPojo.setImgText(pojo.getImgText());
             menuListPojo.setNodes(nodes);
             MenuList.add(menuListPojo);
         }

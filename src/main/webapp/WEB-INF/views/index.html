@@ -31,8 +31,8 @@
                         </ul>
                     </li>
                 </ul>
-                <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
-                   href="javascript:location.replace(location.href);" title="刷新"><i
+                <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" id="refreshButtun"
+                   href="main.htm" title="刷新"><i
                         class="Hui-iconfont">&#xe68f;</i></a>
             </nav>
         </div>
@@ -46,18 +46,19 @@
     <div class="menu_dropdown bk_2" th:if="${menu1s != null and #lists.size(menu1s)>0}" >
         <dl  class="menu-article"  id="menu_notes" th:each="menu1:${menu1s}">
             <!--第一级菜单-->
-            <dt><i class="Hui-iconfont" >&#xe616;<label th:text="${menu1.menuName}"/></i>
-                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i th:class="'Hui-iconfont '+${menu1.imgText}" ><label th:text="${menu1.menuName}"/></i>
+                <i class="Hui-iconfont menu_dropdown-arrow Hui-iconfont-arrow2-bottom"></i></dt>
             <dd>
                 <ul th:if="${menu1.nodes != null and #lists.size(menu1.nodes)>0}">
                     <li th:each="node : ${menu1.nodes}">
                         <div th:if="${node.menuHref != null }">
                             <!--第二级菜单-->
-                            <a th:value="${node.menuHref}" th:name="|${menu1.menuName}_${node.menuName}|"
+                            <a th:class="'Hui-iconfont '+${node.imgText}"
+                                    th:value="${node.menuHref}" th:name="|${menu1.menuName}_${node.menuName}|"
                                th:onclick="'javascript:loadPage(this);'" th:text="${node.menuName}"/>
                         </div>
                         <div th:if="${node.menuHref == null }">
-                            <a><label th:text="${node.menuName}"/></a>
+                            <a th:class="'Hui-iconfont '+${node.imgText}" th:text="${node.menuName}"></a>
                         </div>
 
                     </li>
@@ -100,6 +101,7 @@
         //document.frames('mainFrame').location.reload()
         // document.frames('mainFrame').contentWindow.location.reload(true);
         $('#mainFrame').attr('src', object.getAttribute("value"));
+
         var arr = object.name.split("_");
         if (arr[0] != null) {
             document.getElementById("stile1").style.display = "";
