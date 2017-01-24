@@ -1,8 +1,6 @@
 package com.cn.web.pojo;
 
 
-import com.cn.web.util.page.PageBaseUtil;
-
 /**
  * Describe:
  * User:tangjing
@@ -10,8 +8,9 @@ import com.cn.web.util.page.PageBaseUtil;
  * Time:下午4:19
  */
 
-public class UserPojo  extends PageBaseUtil{
+public class UserPojo {
 
+    private String rowNum;        //行号
     private int    userId;
     private String userName;
     private String userCode;
@@ -65,5 +64,13 @@ public class UserPojo  extends PageBaseUtil{
 
     public void setUptDate(String uptDate) {
         this.uptDate = uptDate;
+    }
+
+    public String getRowNum() {
+        return rowNum;
+    }
+
+    public void setRowNum(String rowNum) {
+        this.rowNum = rowNum;
     }
 }

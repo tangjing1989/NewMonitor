@@ -14,5 +14,4 @@ public interface IUserImpl {
 
     String queryUserListPage( String aoData) throws Exception;
 
-    int queryUserListCount() throws Exception;
 }

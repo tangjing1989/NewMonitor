@@ -3,6 +3,7 @@ package com.cn.web.util.page;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -14,43 +15,25 @@ import java.util.Map;
  * Time:下午12:23
  */
 
-public class PageBaseUtil<T> {
+public class PageBaseUtil {
 
-    private String              rowNum;        //行号
     private String              sEcho;
     private int                 iDisplayStart;  // 起始索引
     private int                 iDisplayLength; // 每页显示的行数
     private int                 iTotalRecords;  //总页数
     private int                 sumNum;         //总记录数
-    private List<T>             list;
     private String              PageObject;
     private Map<String, String> paraMap;//查询参数
 
 
     public PageBaseUtil() {
-        this.rowNum = rowNum;
         this.sEcho = null;
         this.iDisplayStart = 0;
         this.iDisplayLength = 0;
         this.iTotalRecords = 0;
     }
 
-    public String getRowNum() {
-        return rowNum;
-    }
 
-    public void setRowNum(String rowNum) {
-        this.rowNum = rowNum;
-    }
-
-
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setList(List<T> list) {
-        this.list = list;
-    }
 
     public int getSumNum() {
         return sumNum;
@@ -72,24 +55,20 @@ public class PageBaseUtil<T> {
 
             if (obj.get("name").equals("iDisplayLength"))
                 this.iDisplayLength = obj.getInt("value");
-            if (obj.get("name").equals("param"))
-            {
-                JSONObject  jasonObject = JSONObject.fromObject(obj.getString("value"));
-                paraMap= (Map<String,String>)jasonObject;
+            if (obj.get("name").equals("param")) {
+                JSONObject jasonObject = JSONObject.fromObject(obj.getString("value"));
+                this.paraMap = (Map<String, String>) jasonObject;
             }
         }
     }
 
 
-    public String getPageObject(List<T> list) {
+    public String getPageObject(List list) {
         JSONObject getObj = new JSONObject();
         getObj.put("sEcho", this.sEcho);// 不知道这个值有什么用,有知道的请告知一下
         getObj.put("iTotalRecords", this.iTotalRecords);//实际的行数
         getObj.put("iTotalDisplayRecords", sumNum);//显示的行数,这个要和上面写的一样
-        if ((iDisplayStart + iDisplayLength) < iTotalRecords)
-            getObj.put("aaData", list.subList(iDisplayStart, iDisplayStart + iDisplayLength));//要以JSON格式返回
-        else
-            getObj.put("aaData", list);//要以JSON格式返回
+        getObj.put("aaData", list);//要以JSON格式返回
         return getObj.toString();
 
     }
@@ -98,6 +77,10 @@ public class PageBaseUtil<T> {
         Map<String, Object> resultMap = new HashedMap();
         resultMap.put("start", iDisplayStart);
         resultMap.put("end", iDisplayLength);
+        for (String str : this.paraMap.keySet()) {
+            if(!StringUtils.isEmpty(this.paraMap.get(str).toString()))
+                resultMap.put(str, this.paraMap.get(str));
+        }
         return resultMap;
     }
 }

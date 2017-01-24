@@ -21,7 +21,7 @@ public interface UserMapper {
 
     List<UserPojo> queryUserListPage(@Param("map") Map<String,Object> map) throws SQLException;
 
-    int queryUserListCount() throws SQLException;
+    int queryUserListCount(@Param("map") Map<String,Object> map) throws SQLException;
 
 
 }

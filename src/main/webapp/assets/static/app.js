@@ -1,3 +1,4 @@
+//分页查询封装
 // tableClass  table样式名称
 // url:访问请求地址
 // aoColumns 列名对应
