@@ -1,6 +1,7 @@
 package com.cn.web.util;
 
 
+import com.mysql.jdbc.StringUtils;
 import org.springframework.web.servlet.View;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -23,7 +24,10 @@ public class HtmlResourceView extends ThymeleafViewResolver {
         //servletContextTemplateResolver.initialize();
         String prefix = servletContextTemplateResolver.getPrefix().substring(1);
         String suffix = servletContextTemplateResolver.getSuffix();
-        File   file   = new File(this.getServletContext().getRealPath("/") + prefix + viewName + suffix);
+        String path= this.getServletContext().getRealPath("/");
+        path=path.substring(path.length()-1).equals("/")?path:path+"/";
+        prefix=prefix.substring(prefix.length()).equals("/")?prefix:prefix.substring(0,prefix.length()-1);
+        File   file   = new File(path + prefix + viewName + suffix);
         if (!file.exists()) {
             return null;
         }

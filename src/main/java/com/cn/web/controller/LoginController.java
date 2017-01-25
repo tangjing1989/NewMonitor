@@ -33,6 +33,7 @@ public class LoginController {
         try {
             UserPojo user = iUserImpl.getUser(userName, password);
             if (user != null) {
+                model.addAttribute("user",user);
                 request.getSession().setAttribute(Global.USER_SESSION_KEY, user);
             }
             else
