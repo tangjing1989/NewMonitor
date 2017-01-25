@@ -14,4 +14,4 @@
     
 --20170124
     
-    1.增加对jboss和jetty中间件的支持（HtmlResourceView.java）
+    1.实现配置文件配置化的形式增多视图解析对jboss和jetty中间件的支持

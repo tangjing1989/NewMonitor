@@ -9,4 +9,5 @@ package com.cn.web.util;
 
 public   class Global {
     public static final String USER_SESSION_KEY = "UserSessionKey";
+
 }
